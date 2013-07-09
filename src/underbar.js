@@ -85,7 +85,7 @@ var _ = { };
   // the return value of the previous iterator call.
   //
   // You can pass in an initialValue that is passed to the first iterator
-  // call. Defaults to 0.
+  // call. Defaults to the first element in the input array.
   //
   // Example:
   //   var numbers = [1,2,3];
