@@ -58,7 +58,6 @@ var _ = { };
     // implemented for you. Instead of using a standard `for` loop, though,
     // it uses the iteration helper `each`, which you will need to write.
     for ( var i = 0, len = array.length; i < len; i++) {
-      console.log(array[i]);
       if (array[i] === target) {
         return i;
       }
@@ -68,6 +67,13 @@ var _ = { };
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, iterator) {
+    var results = [];
+    _.each(collection, function(item) {
+      if (iterator(item)) {
+        results.push(item);
+      }
+    });
+    return results;
   };
 
   // Return all elements of an array that don't pass a truth test.
