@@ -93,14 +93,9 @@ var _ = { };
   _.uniq = function(array) {
     var results = [];
     _.each(array, function(item) {
-        if (!(_.contains(results, item))) {
-          results.push(item);
-        }
-        // _.each(results, function(resultsItem) {
-        //   if (item !== resultsItem) {
-        //     results.push(item);
-        //   }
-        // });
+      if (!(_.contains(results, item))) {
+        results.push(item);
+      }
     });
     return results;
   };
@@ -138,6 +133,7 @@ var _ = { };
 
   // Calls the method named by methodName on each value in the list.
   _.invoke = function(list, methodName, args) {
+    _.each(list, eval(methodName));
   };
 
   // Reduces an array or object to a single value by repetitively calling
@@ -154,6 +150,14 @@ var _ = { };
   //   }, 0); // should be 6
   //
   _.reduce = function(collection, iterator, initialValue) {
+    _.each(collection, function(item) {
+      if (initialValue === undefined) {
+        initialValue = collection[0];
+      } else {
+        initialValue = iterator(initialValue, item);
+      }
+    });
+    return initialValue;
   };
 
   // Determine if the array or object contains a given value (using `===`).
