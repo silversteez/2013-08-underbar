@@ -240,14 +240,6 @@ var _ = { };
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
-    // for (var i = 0, len = arguments.length; i < len; i++) {
-    //   if (i > 0) { //skip obj which is first arg
-    //      for (var attribute in arguments[i]) {
-    //       obj[attribute] = arguments[i][attribute];
-    //     }
-    //   }
-    // }
-    // return obj;
     _.each(arguments, function(item, key) {
       if (key !== 0) { //skip obj which is first arg
         for (var attribute in item) {
@@ -261,6 +253,16 @@ var _ = { };
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
+    _.each(arguments, function(item, key) {
+      if (key !== 0) { //skip obj which is first arg
+        for (var attribute in item) {
+          if (!obj.hasOwnProperty(attribute)) { //test for attribute existence
+            obj[attribute] = item[attribute];
+          }
+        }
+      }
+    });
+    return obj;
   };
 
 
