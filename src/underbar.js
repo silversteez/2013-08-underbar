@@ -303,7 +303,6 @@ var _ = { };
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
-    var alreadyComputed = false;
     var precomputedArgs = {};
     return function() {
       if (!precomputedArgs.hasOwnProperty(arguments[0])) { //argument isn't already computed
@@ -320,6 +319,17 @@ var _ = { };
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+    var newArgs = [];
+    for (var i = 0, len = arguments.length; i < len; i++) { //try to remove them with arguments.splice, but doesn't exist i think
+      if (i > 1) {//skip func, wait
+        newArgs.push(arguments[i]);
+      }
+    }
+    if (newArgs.length > 0) { //not sure what is going on here but it works
+      setTimeout(func.apply(null, newArgs), wait);
+    } else {
+      setTimeout(func, wait);
+    }
   };
 
 
