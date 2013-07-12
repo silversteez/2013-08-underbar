@@ -345,7 +345,7 @@ var _ = { };
       var tempItem = shuffledArray.pop();
       var spliceIndex = Math.floor(Math.random() * shuffledArray.length);
       shuffledArray.splice(spliceIndex, 0, tempItem);
-      console.log(shuffledArray);
+      //console.log(shuffledArray);
     });
     return shuffledArray;
   };
@@ -370,6 +370,33 @@ var _ = { };
   // Example:
   // _.zip(['a','b','c','d'], [1,2,3]) returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
   _.zip = function() {
+    var lenLargestArray = 0;
+    _.each(arguments, function(array) { //get largest array length
+      if (array.length > lenLargestArray) {
+        lenLargestArray = array.length;
+      }
+    });
+    _.each(arguments, function(array) { //push undefined into shorter arrays to equalize length
+      if (array.length < lenLargestArray) {
+        var diff = lenLargestArray - array.length;
+        for (var i = 0; i < diff; i++) {
+          array.push(undefined);
+        }
+      }
+    });
+    var zippedArrays = [];
+    // var highestIndex = -1;
+    _.each(arguments, function(array, arrayKey) {//for each passed in array
+      _.each(array, function(item, key) {//for each item in passed in array
+        if (arrayKey == 0) { //make a new array in zippedArrays if needed
+        // if (key > highestIndex) { //make a new array in zippedArrays if needed
+          zippedArrays[key] = [];
+          // highestIndex = key;
+        }  //or just add to the existing array
+        zippedArrays[key][arrayKey] = item;
+      });
+    });
+    return zippedArrays;
   };
 
   // Takes a multidimensional array and converts it to a one-dimensional array.
