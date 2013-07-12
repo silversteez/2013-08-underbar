@@ -444,6 +444,24 @@ var _ = { };
   // Take the difference between one array and a number of other arrays.
   // Only the elements present in just the first array will remain.
   _.difference = function(array) {
+    var results = [];
+    var doPushItem = true;
+    var args = arguments;
+
+    _.each(array, function(item, key) {
+      _.each(args, function(otherArray, argsKey) {
+        if (argsKey > 0) { //skip array
+          if (_.contains(otherArray, item)) {
+            doPushItem = false;
+          }
+        }
+      });
+      if (doPushItem) {
+        results.push(item);
+      }
+      doPushItem = true;
+    });
+    return results;
   };
 
 
