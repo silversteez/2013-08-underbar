@@ -329,7 +329,7 @@ var _ = { };
       setTimeout(func.apply(null, newArgs), wait);
     } else {
       setTimeout(func, wait);
-    }
+    } //am i supposed to return the function altered or just call it?
   };
 
 
@@ -339,7 +339,15 @@ var _ = { };
    */
 
   // Shuffle an array.
-  _.shuffle = function(array) {
+  _.shuffle = function(array) { //i think the spec is wrong...
+    var shuffledArray = array;
+    _.each(shuffledArray, function() {
+      var tempItem = shuffledArray.pop();
+      var spliceIndex = Math.floor(Math.random() * shuffledArray.length);
+      shuffledArray.splice(spliceIndex, 0, tempItem);
+      console.log(shuffledArray);
+    });
+    return shuffledArray;
   };
 
 
