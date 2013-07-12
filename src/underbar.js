@@ -385,13 +385,10 @@ var _ = { };
       }
     });
     var zippedArrays = [];
-    // var highestIndex = -1;
-    _.each(arguments, function(array, arrayKey) {//for each passed in array
-      _.each(array, function(item, key) {//for each item in passed in array
+    _.each(arguments, function(array, arrayKey) {
+      _.each(array, function(item, key) {
         if (arrayKey == 0) { //make a new array in zippedArrays if needed
-        // if (key > highestIndex) { //make a new array in zippedArrays if needed
           zippedArrays[key] = [];
-          // highestIndex = key;
         }  //or just add to the existing array
         zippedArrays[key][arrayKey] = item;
       });
@@ -404,6 +401,20 @@ var _ = { };
   //
   // Hint: Use Array.isArray to check if something is an array
   _.flatten = function(nestedArray, result) {
+    var results = [];
+
+    var itemFinder = function(array) {
+      _.each(array, function(item) {
+        if (Array.isArray(item)) {
+          itemFinder(item);
+        } else {
+          results.push(item);
+        }
+      });
+    };
+
+    itemFinder(nestedArray);
+    return results;
   };
 
   // Takes an arbitrary number of arrays and produces an array that contains
