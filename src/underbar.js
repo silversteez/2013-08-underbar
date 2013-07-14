@@ -133,7 +133,14 @@ var _ = { };
 
   // Calls the method named by methodName on each value in the list.
   _.invoke = function(list, methodName, args) {
-    _.each(list, eval(methodName));
+    _.each(list, function(item) {
+      if (typeof methodName === "string") { //method is string
+      item[methodName].apply(item, args);
+      } else {
+      methodName.apply(item, args);
+      }
+    });
+    return list;
   };
 
   // Reduces an array or object to a single value by repetitively calling
@@ -340,12 +347,11 @@ var _ = { };
 
   // Shuffle an array.
   _.shuffle = function(array) { //i think the spec is wrong...
-    var shuffledArray = array;
+    var shuffledArray = array.slice();
     _.each(shuffledArray, function() {
       var tempItem = shuffledArray.pop();
       var spliceIndex = Math.floor(Math.random() * shuffledArray.length);
       shuffledArray.splice(spliceIndex, 0, tempItem);
-      //console.log(shuffledArray);
     });
     return shuffledArray;
   };
@@ -387,7 +393,7 @@ var _ = { };
     var zippedArrays = [];
     _.each(arguments, function(array, arrayKey) {
       _.each(array, function(item, key) {
-        if (arrayKey == 0) { //make a new array in zippedArrays if needed
+        if (arrayKey === '0') { //make a new array in zippedArrays if needed
           zippedArrays[key] = [];
         }  //or just add to the existing array
         zippedArrays[key][arrayKey] = item;
